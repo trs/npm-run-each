@@ -1,0 +1,27 @@
+name: 'Publish'
+inputs:
+  name:
+    description: 'Package name'
+    required: true
+  token:
+    description: 'NPM Token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        registry-url: 'https://registry.npmjs.org/'
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
+    - run: yarn install --frozen-lockfile
+      shell: bash
+    - run: yarn build
+      shell: bash
+    - run: node -r ts-node/register scripts/setPackageName.ts "${{ inputs.name }}" "./package.json"
+      shell: bash
+    - run: npm publish
+      shell: bash
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}

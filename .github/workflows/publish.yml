@@ -1,0 +1,24 @@
+name: Publish
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish_as_npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: trs/npm-run-each@v1
+        with:
+          name: npm-run-each
+          token: ${{ secrets.NPM_TOKEN }}
+
+  publish_as_yarn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: trs/npm-run-each@v1
+        with:
+          name: yarn-run-each
+          token: ${{ secrets.NPM_TOKEN }}
