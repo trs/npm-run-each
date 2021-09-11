@@ -21,6 +21,8 @@ runs:
       shell: bash
     - run: node -r ts-node/register scripts/setPackageName.ts "${{ inputs.name }}" "./package.json"
       shell: bash
+    - run: node -r ts-node/register scripts/updateReadme.ts "${{ inputs.name }}" "./readme.md"
+      shell: bash
     - run: npm publish
       shell: bash
       env:
