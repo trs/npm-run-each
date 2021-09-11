@@ -1,8 +1,8 @@
 import task from 'tasuku';
 import {exec} from 'child_process';
 
-export async function runScript(name: string) {
-  const script = `npm run ${name}`;
+export async function runScript(manager: string, name: string) {
+  const script = `${manager} run ${name}`;
   return task(script, async () => {
     await new Promise<void>((resolve, reject) => {
       const child = exec(script, (err, stdout, stderr) => {
